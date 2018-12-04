@@ -4,7 +4,7 @@ from os import mkdir, getcwd, path, access, W_OK, listdir
 from PIL import Image
 from io import BytesIO
 import argparse
-from shutil import rmtree
+from shutil import rmtree, which
 from sys import stdout
 import validators
 
@@ -41,6 +41,8 @@ args = parser.parse_args()
 
 def validateArgs():
     valids = []
+    if which('kindlegen') is None :
+        valids.append('kindle gen is missing. download kindlegen from https://www.amazon.com/gp/feature.html?ie=UTF8&docId=1000765211 and place the exe in your env scripts folder')
     if not validators.url(args.url) :
         valids.append('url error')
     if args.start >=1:
@@ -99,7 +101,7 @@ def download(content,start,end,ki,dest):
 
         for page in pages_url:
             
-            stdout.write('\rDownloaded : [' + str(page_count) + '/' + str(len(pages_url)) + ']' )
+            stdout.write('\rDownloaded : [' + str(page_count) + '/' + str(len(pages_url)) + '] pages' )
             p = requests.get(page,stream=True)
             
             if p.status_code != 200 : 
