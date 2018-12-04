@@ -56,7 +56,7 @@ def validateArgs():
     if len(valids) > 0 :
         print('errors in input arguments')
         print('\n')
-        print(valids)
+        print('\n'.join(valids))
         quit()
 
     main(args.url,args.start,args.end,args.ki,args.dest)
